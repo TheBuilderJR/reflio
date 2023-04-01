@@ -37,6 +37,26 @@ export const toDateTime = (secs) => {
   return t;
 };
 
+export const timeSince = (date) => {
+  const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+  const intervals = [
+    { unit: 'year', seconds: 31536000 },
+    { unit: 'month', seconds: 2592000 },
+    { unit: 'day', seconds: 86400 },
+    { unit: 'hour', seconds: 3600 },
+    { unit: 'minute', seconds: 60 },
+  ];
+
+  for (const interval of intervals) {
+    const count = Math.floor(seconds / interval.seconds);
+    if (count >= 1) {
+      return `${count} ${interval.unit}${count > 1 ? 's' : ''} ago`;
+    }
+  }
+
+  return `${seconds} seconds ago`;
+};
+
 export const classNames = (...classes) => classes.filter(Boolean).join(' ');
 
 export const checkValidUrl = (str) => {
